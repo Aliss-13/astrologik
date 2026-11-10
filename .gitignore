@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Outils
+.vscode/
+.pytest_cache/
+
+# Bases de données locales
+*.db
+
+# Espace de travail personnel
+*.code-workspace
