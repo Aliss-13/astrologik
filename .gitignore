@@ -12,3 +12,4 @@ __pycache__/
 
 # Espace de travail personnel
 *.code-workspace
+*.txt
