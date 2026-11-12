@@ -2,6 +2,9 @@ import pytest
 from dates_and_time import convert_to_utc
 
 
+# python -m pytest tests/test_convert_to_utc.py -v
+
+
 @pytest.mark.parametrize(
     "start_time, timezone_name, expected",
     [

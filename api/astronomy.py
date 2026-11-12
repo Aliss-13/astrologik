@@ -64,7 +64,11 @@ def get_all_planets_positions(start_time):
     positions = {}
 
     for planet_name, planet_id in PLANETS.items():
+
         planet_position = get_planet_position(planet_id, start_time)
+        if planet_position is None:
+            raise ValueError(f"La longitude de {planet_name} n'a pas pu être récupérée.")
+
         positions[planet_name] = planet_position
 
     return positions
