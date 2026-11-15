@@ -33,15 +33,15 @@ def get_planetary_aspects(positions, orb):
         aspect = find_aspect(distance, orb)
 
         if aspect is not None:
-            #  à déplacer dans le main
+
+            effective_orb = abs(ANGLES[aspect] - distance)
 
             aspects.append(
                 {"planet_1": planet_1, 
                 "planet_2": planet_2, 
                 "aspect": aspect, 
-                "distance": distance}
+                "distance": distance,
+                "effective_orb": effective_orb}
                 )
         
     return aspects
-
-

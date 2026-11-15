@@ -16,9 +16,9 @@ PLANETS = {
 
 # python -m api.astronomy
 
-def get_planet_position(planet_id, start_time):
+def get_planet_position(planet_id, start_time_utc):
 
-    date = datetime.strptime(start_time, "%Y-%m-%d %H:%M") # Cette méthode transforme une chaîne de caractères en objet datetime.
+    date = datetime.strptime(start_time_utc, "%Y-%m-%d %H:%M") # Cette méthode transforme une chaîne de caractères en objet datetime.
     date_end = date + timedelta(hours=1) # calculer une date de fin exactement une heure après la date de départ
     time_end = date_end.strftime("%Y-%m-%d %H:%M") # Cette méthode transforme un objet datetime en une chaîne de caractères.
 
@@ -30,7 +30,7 @@ def get_planet_position(planet_id, start_time):
         "QUANTITIES": "31",
         "CENTER": "500@399",
         "EPHEM_TYPE": "OBSERVER",
-        "START_TIME": start_time,
+        "START_TIME": start_time_utc,
         "STOP_TIME": time_end,
         "STEP_SIZE": "1 h"
     }
@@ -59,13 +59,13 @@ def get_planet_position(planet_id, start_time):
     # print(type(response)) # La réponse contient-elle les données astrologiques attendues ?
     # print(response.text)
 
-def get_all_planets_positions(start_time):
+def get_all_planets_positions(start_time_utc):
 
     positions = {}
 
     for planet_name, planet_id in PLANETS.items():
 
-        planet_position = get_planet_position(planet_id, start_time)
+        planet_position = get_planet_position(planet_id, start_time_utc)
         if planet_position is None:
             raise ValueError(f"La longitude de {planet_name} n'a pas pu être récupérée.")
 

@@ -15,3 +15,17 @@ def convert_to_utc(start_time, timezone_name):
     # => Pour vérifier la validité de la saisie, pas besoin de réaffecter start_time
 
     return start_time_utc
+
+
+def get_date_and_time():
+
+    while True:
+
+        try:
+            start_time = input("Entrez une date et une heure (AAAA-MM-JJ HH:MM) : ")
+            timezone_name = "Europe/Paris"
+            start_time_utc = convert_to_utc(start_time, timezone_name)
+            return start_time_utc, start_time
+
+        except ValueError:
+            print("Saisie invalide.")
