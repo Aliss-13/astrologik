@@ -11,20 +11,36 @@ L'objectif est de développer progressivement une application capable de calcule
 
 ## ✨ Fonctionnalités actuelles
 
-- Saisie d'une date et d'une heure.
-- Validation du format de la date.
-- Conversion de l'heure locale en UTC avec prise en charge des fuseaux horaires.
-- Récupération des longitudes écliptiques géocentriques via l'API JPL Horizons de la NASA.
+### 🌍 Données astronomiques
+
+- Récupération des longitudes écliptiques géocentriques via l'API NASA JPL Horizons.
 - Calcul des signes du zodiaque occidental à partir des longitudes.
 - Calcul de la position en degrés dans chaque signe.
 - Affichage des positions de dix corps célestes : Soleil, Lune, Mercure, Vénus, Mars, Jupiter, Saturne, Uranus, Neptune et Pluton.
+- Géocodage des lieux via l'API Nominatim (OpenStreetMap).
+
+### 🕒 Dates et calculs temporels
+
+- Saisie et validation du format des dates et heures.
+- Conversion de l'heure locale en UTC avec prise en charge des fuseaux horaires.
+- Détection des heures ambiguës ou inexistantes lors des changements d'heure.
+- Calcul des fractions de journée à partir des heures, minutes et secondes.
+- Conversion des dates et heures UTC en jours juliens.
+- Calcul du temps sidéral local à partir du temps sidéral de Greenwich et de la longitude géographique.
+
+### 📐 Géométrie astrologique
+
+- Calcul des distances angulaires entre deux positions sur le cercle zodiacal.
+- Identification des aspects planétaires selon leurs angles et les tolérances définies.
 
 ## 🛠️ Technologies utilisées
 
-- **Python**
-- **Requests** : communication avec l'API NASA JPL Horizons.
+- **Python** : développement de l'application.
+- **Requests** : communication avec les API NASA JPL Horizons et Nominatim.
+- **Nominatim (OpenStreetMap)** : géocodage des lieux.
 - **datetime** : manipulation des dates et des heures.
 - **zoneinfo / tzdata** : gestion des fuseaux horaires.
+- **math** : calculs mathématiques et astronomiques.
 - **pytest** : tests unitaires automatisés.
 
 ## 📁 Architecture du projet
@@ -32,13 +48,23 @@ L'objectif est de développer progressivement une application capable de calcule
 ```text
 ASTROLOGIK/
 ├── api/
-│   └── astronomy.py          # Requêtes vers JPL Horizons
+│   ├── astronomy.py           # API NASA JPL Horizons : positions astronomiques
+│   └── geography.py           # API Nominatim : géocodage
+│
 ├── astrology/
-│   └── western.py            # Calculs du zodiaque occidental
-├── dates_and_time.py         # Conversion des dates en UTC
-├── display.py                # Présentation du programme
-├── tests/                    # Tests unitaires
-└── main.py                   # Point d'entrée
+│   ├── western.py             # Conversion des longitudes en signes tropicaux
+│   ├── geometry.py            # Distances angulaires et formation des paires
+│   └── aspects.py             # Identification des aspects selon des règles configurables
+│
+├── astronomy/
+│   └── time_calculations.py   # Fractions de journée, jours juliens et calculs sidéraux
+│
+├── tests/                     # Tests automatisés avec pytest
+│
+├── dates_and_time.py          # Fuseaux horaires, heures ambiguës et conversions UTC
+├── display.py                 # Affichage et couleurs du terminal
+├── main.py                    # Orchestration du programme
+└── user_input.py              # Gestion des saisies utilisateur
 ```
 
 ## 🚀 Installation et utilisation
@@ -68,11 +94,11 @@ Saisir une date au format `AAAA-MM-JJ HH:MM`.
 
 **Remarque :** le fuseau horaire est actuellement fixé à `Europe/Paris` dans l'interface principale. La fonction de conversion accepte déjà d'autres fuseaux horaires.
 
-Une connexion Internet est nécessaire pour interroger JPL Horizons.
+Une connexion Internet est nécessaire pour interroger JPL Horizons et Nominatim.
 
 ## 🧪 Tests unitaires
 
-Le projet utilise `pytest` pour vérifier les calculs et conversions.
+Le projet utilise `pytest` pour vérifier les calculs astronomiques, géométriques et temporels.
 
 Lancer les tests :
 
@@ -80,32 +106,42 @@ Lancer les tests :
 python -m pytest -v
 ```
 
-Les tests de conversion UTC couvrent notamment :
+**59 tests réussis** lors de la dernière exécution.
 
-- Les heures d'été et d'hiver à Paris.
-- Les changements de date.
-- Plusieurs fuseaux horaires internationaux.
-- Les décalages horaires non entiers, comme celui de l'Inde.
+Les tests couvrent notamment :
+
+- Les conversions entre heures locales et UTC.
+- Les heures d'été et d'hiver et les changements de date.
+- Les heures ambiguës ou inexistantes lors des transitions horaires.
+- Plusieurs fuseaux horaires internationaux, dont les décalages non entiers.
+- Les calculs zodiacaux et les distances angulaires.
+- Les aspects planétaires.
+- Le calcul du temps sidéral local.
+- Les fractions de journée et les jours juliens.
+- Les années bissextiles et les exceptions du calendrier grégorien.
 
 ## 🔮 Évolutions envisagées
 
-- Choix du lieu de naissance et du fuseau horaire.
-- Gestion des heures ambiguës ou inexistantes lors des changements d'heure.
+- Choix du lieu de naissance et du fuseau horaire dans l'interface.
+- Calcul du temps sidéral de Greenwich.
 - Calcul de l'ascendant et des maisons astrologiques.
-- Calcul des aspects entre les planètes.
-- Génération d'un thème astral.
+- Génération d'un thème astral complet.
 - Exploration de différents systèmes astrologiques.
 - Interprétations astrologiques.
+- Enregistrement et consultation des thèmes dans une base SQLite.
 
 ## 📚 Objectifs pédagogiques
 
 Ce projet me permet d'approfondir :
 
-- La consommation d'API REST.
+- La consommation et l'intégration de plusieurs API REST, ainsi que le traitement de leurs réponses.
+- La séparation des responsabilités entre acquisition des données, calculs, saisies utilisateur et affichage.
 - Le traitement de données astronomiques.
 - La manipulation des dates et des fuseaux horaires.
+- Les calculs géométriques et les conversions de coordonnées.
 - L'organisation modulaire d'une application Python.
-- Les tests automatisés avec `pytest`.
+- La conception de fonctions indépendantes et réutilisables.
+- Les tests automatisés avec `pytest`, notamment les tests paramétrés et les cas limites.
 
 ---
 
