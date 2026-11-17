@@ -1,6 +1,4 @@
 from itertools import combinations
-# combinations(positions, 2) signifie : « Génère toutes les combinaisons de deux clés distinctes du dictionnaire, 
-# sans tenir compte de leur ordre. »
 from astrology.geometry import angular_distance
 
 
@@ -26,6 +24,8 @@ def get_planetary_aspects(positions, orb):
     aspects = []
 
     for planet_1, planet_2 in combinations(positions, 2):
+        # combinations(positions, 2) signifie : « Génère toutes les combinaisons de deux clés distinctes du dictionnaire, 
+        # sans tenir compte de leur ordre. »
         longitude_1 = positions[planet_1]
         longitude_2 = positions[planet_2]
 

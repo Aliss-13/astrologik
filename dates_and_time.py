@@ -49,6 +49,16 @@ def get_timezone(latitude, longitude):
 
 
 def helper_offsets_are_the_same(offset_first, offset_second):
+    """
+    Vérifie si deux décalages horaires par rapport à UTC sont identiques.
+
+    Args:
+        offset_first (timedelta): Premier décalage UTC.
+        offset_second (timedelta): Second décalage UTC.
+
+    Returns:
+        bool: True si les décalages sont identiques, False sinon.
+    """
     return offset_first == offset_second # return True par défaut
 
 
@@ -65,7 +75,27 @@ def detect_time_status(results, offset_first, offset_second, date_first, date_se
 
 
 def analyze_local_time(start_time, timezone_name):
+    """
+    Analyse une date et une heure locales en tenant compte des changements d'heure.
 
+    Vérifie la validité de l'heure locale en testant les deux valeurs
+    possibles de `fold` (0 et 1), puis en effectuant une conversion
+    aller-retour entre le fuseau local et UTC.
+
+    Permet de distinguer :
+    - Une heure normale : elle existe et n'est pas ambiguë.
+    - Une heure ambiguë : elle existe deux fois lors du passage à l'heure d'hiver.
+    - Une heure inexistante : elle est sautée lors du passage à l'heure d'été.
+
+    Args:
+        start_time (str): Date et heure locales au format "YYYY-MM-DD HH:MM".
+        timezone_name (str): Nom du fuseau horaire IANA
+            (ex. "Europe/Paris").
+
+    Returns:
+        Résultat de detect_time_status(), qui détermine le statut
+        de l'heure locale et les dates correspondantes.
+    """
     date_local = datetime.strptime(start_time, "%Y-%m-%d %H:%M")
     
     date_first = date_local.replace(tzinfo=ZoneInfo(timezone_name), fold=0)
