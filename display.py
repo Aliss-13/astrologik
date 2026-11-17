@@ -56,3 +56,14 @@ def display_planetary_aspects(aspects):
         effective_orb = aspect_data["effective_orb"]
 
         print(f"{planet_1:<8} et {planet_2:<8} : {YELLOW}{aspect:<12}{RESET} ({distance:>6.2f}° | orbe : {effective_orb:.2f}°)")
+
+
+def display_available_cities(available_cities):
+
+    for number, city in enumerate(available_cities, start=1):
+        print(f"{number} - {city['display_name']}")
+
+
+def display_double_calculation_message():
+    print("Ben ça va, tranquille, on s'emmerde pas !")
+    print()
