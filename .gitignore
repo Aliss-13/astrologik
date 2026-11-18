@@ -13,3 +13,7 @@ __pycache__/
 # Espace de travail personnel
 *.code-workspace
 *.txt
+*.png
+!pictures/
+!pictures/*.png
+*.jpg

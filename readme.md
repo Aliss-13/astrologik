@@ -32,6 +32,11 @@ L'objectif est de développer progressivement une application capable de calcule
 
 - Calcul des distances angulaires entre deux positions sur le cercle zodiacal.
 - Identification des aspects planétaires selon leurs angles et les tolérances définies.
+- Calcul de l'ascendant et du descendant à partir de la date, de l'heure et des coordonnées géographiques.
+
+## 📸 Aperçu du programme
+
+<img src="pictures/astroprov.png" alt="Capture d'écran d'ASTROLOGIK" width="750">
 
 ## 🛠️ Technologies utilisées
 
@@ -57,6 +62,7 @@ ASTROLOGIK/
 │   └── aspects.py             # Identification des aspects selon des règles configurables
 │
 ├── astronomy/
+│   ├── coordinates.py         # Calcul des angles ascendant et descendant sur l'écliptique
 │   └── time_calculations.py   # Fractions de journée, jours juliens et calculs sidéraux
 │
 ├── tests/                     # Tests automatisés avec pytest
@@ -92,7 +98,7 @@ python main.py
 
 Saisir une date au format `AAAA-MM-JJ HH:MM`.
 
-**Remarque :** le fuseau horaire est actuellement fixé à `Europe/Paris` dans l'interface principale. La fonction de conversion accepte déjà d'autres fuseaux horaires.
+Remarque : le fuseau horaire est déterminé automatiquement à partir des coordonnées géographiques du lieu sélectionné. Le programme prend également en charge les heures ambiguës ou inexistantes lors des changements d'heure.
 
 Une connexion Internet est nécessaire pour interroger JPL Horizons et Nominatim.
 
@@ -106,7 +112,7 @@ Lancer les tests :
 python -m pytest -v
 ```
 
-**59 tests réussis** lors de la dernière exécution.
+**69 tests réussis** lors de la dernière exécution.
 
 Les tests couvrent notamment :
 
@@ -116,15 +122,17 @@ Les tests couvrent notamment :
 - Plusieurs fuseaux horaires internationaux, dont les décalages non entiers.
 - Les calculs zodiacaux et les distances angulaires.
 - Les aspects planétaires.
-- Le calcul du temps sidéral local.
+- Le calcul du temps sidéral local (comparaison avec calculateur externe).
+- Le calcul du temps sidéral de Greenwich (comparaison avec calculateur externe).
 - Les fractions de journée et les jours juliens.
 - Les années bissextiles et les exceptions du calendrier grégorien.
+- Le calcul de l'obliquité moyenne.
+- Le calcul de l'ascendant et du descendant (comparaison avec calculateur externe).
+
 
 ## 🔮 Évolutions envisagées
 
-- Choix du lieu de naissance et du fuseau horaire dans l'interface.
-- Calcul du temps sidéral de Greenwich.
-- Calcul de l'ascendant et des maisons astrologiques.
+- Calcul Milieu du Ciel, Fond du Ciel et maisons astrologiques.
 - Génération d'un thème astral complet.
 - Exploration de différents systèmes astrologiques.
 - Interprétations astrologiques.
