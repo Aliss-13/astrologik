@@ -67,3 +67,15 @@ def display_available_cities(available_cities):
 def display_double_calculation_message():
     print("Ben ça va, tranquille, on s'emmerde pas !")
     print()
+
+
+def display_ascendant_and_descendant(ascendant, descendant):
+    zodiac_sign_ascendant = get_zodiac_sign(ascendant)
+    zodiac_sign_descendant = get_zodiac_sign(descendant)
+    zodiac_sign_ascendant_degree = get_zodiac_sign_degree(ascendant)
+    zodiac_sign_descendant_degree = get_zodiac_sign_degree(descendant)
+    print()
+    print(
+        f"{YELLOW}Ascendant : {zodiac_sign_ascendant} ({ascendant:.2f}° | {zodiac_sign_ascendant_degree:.2f}°){RESET} - "
+        f"Descendant : {zodiac_sign_descendant} ({descendant:.2f}° | {zodiac_sign_descendant_degree:.2f}°)"
+        )

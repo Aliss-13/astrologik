@@ -4,24 +4,34 @@ import pytest
 # python -m pytest tests/test_get_local_sidereal_time.py -v
 
 @pytest.mark.parametrize(
-    "greenwich_sidereal_time, longitude, expected",
+    "julian_day, longitude, expected",
     [
-        (10, 30, 12),
-        (23, 45, 2),
-        (1, -45, 22),
-        (10, 10, 10.666666666666666),
-        (23, 15, 0)
+        (2451545.0, 30, 20.697374558), # 30° Est : le temps sidéral local augmente.
+        (2451545.0, -30, 16.697374558), # 30° Ouest : le temps sidéral local diminue.
+        (2451545.0, 90, 0.6973745579999999) # 90° Est : le calcul franchit minuit et revient correctement dans l'intervalle de 0 à 24 h.
     ]
 )
 
-def test_get_local_sidereal_time(greenwich_sidereal_time, longitude, expected):
-
-    # TSL = TSG + (longitude/15)
-    # - TSL : temps sidéral local, exprimé en heures.
-    # - TSG : temps sidéral de Greenwich, exprimé en heures.
-    # - Longitude : positive vers l'est, négative vers l'ouest.
-    # On ramène ensuite le résultat entre 0 et 24 heures.
-
-    result = get_local_sidereal_time(greenwich_sidereal_time, longitude)
-
+def test_get_local_sidereal_time(julian_day, longitude, expected):
+    result = get_local_sidereal_time(julian_day, longitude)
     assert result == pytest.approx(expected)
+
+
+@pytest.mark.parametrize(
+    "julian_day, longitude, expected",
+    [
+        (2460677.0, 30, 20 + 45/60 + 34.1703/3600), # 30° Est : le temps sidéral local augmente.
+        (2460677.0, -30, 16 + 45/60 + 34.1703/3600), # 30° Ouest : le temps sidéral local diminue.
+        (2460677.0, 90, 0 + 45/60 + 34.1703/3600) # 90° Est : le calcul franchit minuit et revient correctement dans l'intervalle de 0 à 24 h.
+    ]
+)
+
+def test_lst_astronomical_reference(julian_day, longitude, expected):
+    """Comparaison avec l'US Naval Observatory.
+    Source : https://aa.usno.navy.mil/data/siderealtime
+    - Utilisation du temps sidéral local moyen (TSLM ou LMST).
+    - Réserve : les références sont en UT1, tandis que notre
+      calcul assimile provisoirement UTC à UT1.
+    """
+    lst = get_local_sidereal_time(julian_day, longitude)
+    assert lst == pytest.approx(expected, abs=0.01/3600, rel=0)
