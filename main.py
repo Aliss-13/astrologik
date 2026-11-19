@@ -1,5 +1,5 @@
 from display import (astro_logik_presentation, display_planet_positions, display_planetary_aspects, display_available_cities, 
-                     display_double_calculation_message, display_ascendant_and_descendant)
+                     display_double_calculation_message, display_ascendant_and_descendant, display_sun_position)
 
 from user_input import get_date_and_time, get_city_data, get_city_name, ask_ambiguous_time
 from dates_and_time import get_timezone, convert_to_utc, analyze_local_time
@@ -93,14 +93,12 @@ def main():
 
     for start_time_utc_item in start_times_utc:
 
-        # Position des planètes
+        # Récupération des données : position des planètes
         positions = get_all_planets_positions(start_time_utc_item)
-        display_planet_positions(positions, start_time, start_time_utc_item)
 
-        # Calcul des aspects pour chaque "positions"
-        aspects = get_planetary_aspects(positions, orb)
-        display_planetary_aspects(aspects)
-
+        # Affichage : signe solaire
+        display_sun_position(positions)
+        
         # Calcul de l'ascendant et du descendant
         date_utc = datetime.strptime(start_time_utc_item, "%Y-%m-%d %H:%M")
         julian_day = get_julian_day(date_utc.day, date_utc.month, date_utc.year, 
@@ -109,7 +107,20 @@ def main():
         local_sidereal_time = get_local_sidereal_time(julian_day, longitude)
         local_sidereal_angle_radians = get_local_sidereal_angle_radians(local_sidereal_time)
         ascendant, descendant = get_ascendant_and_descendant(local_sidereal_angle_radians, latitude, mean_obliquity)
+
+        # Affichage : ascendant et descendant
         display_ascendant_and_descendant(ascendant, descendant)
+
+        # Affichage : position des planètes
+        display_planet_positions(positions, start_time, start_time_utc_item)
+
+        # Calcul des aspects pour chaque "positions"
+        aspects = get_planetary_aspects(positions, orb)
+
+        # Affichage : aspects des planètes
+        display_planetary_aspects(aspects)
+
+        
 
 if __name__ == "__main__":
     main()

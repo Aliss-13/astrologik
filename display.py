@@ -12,8 +12,66 @@ SOBER_RED = "\033[38;2;212;107;96m"
 PURPLE = "\033[95m"
 ORANGE = "\033[38;5;208m"
 RED = "\033[38;5;196m"
+MAGENTA = "\033[38;2;218;80;190m"
+LAVENDER = "\033[38;2;180;154;255m"
 RESET = "\033[0m"
 
+ASPECT_COLORS = {
+    "Conjonction": MAGENTA,
+    "Sextile": BLUE,
+    "Carré": RED,
+    "Trigone": BLUE,
+    "Opposition": RED
+}
+
+PLANET_COLORS = {
+    "Soleil": "\033[38;2;255;215;0m",      # Or
+    "Lune": "\033[38;2;192;192;192m",      # Argent
+    "Mercure": "\033[38;2;169;169;169m",   # Gris
+    "Vénus": "\033[38;2;144;238;144m",     # Vert clair
+    "Mars": "\033[38;2;220;60;60m",        # Rouge
+    "Jupiter": "\033[38;2;100;149;237m",   # Bleu royal clair
+    "Saturne": "\033[38;2;112;112;112m",   # Gris foncé
+    "Uranus": "\033[38;2;64;224;208m",     # Turquoise
+    "Neptune": "\033[38;2;147;112;219m",   # Violet
+    "Pluton": "\033[38;2;178;34;80m"       # Bordeaux
+}
+
+ZODIAC_SYMBOLS = {
+    "Bélier": "♈",
+    "Taureau": "♉",
+    "Gémeaux": "♊",
+    "Cancer": "♋",
+    "Lion": "♌",
+    "Vierge": "♍",
+    "Balance": "♎",
+    "Scorpion": "♏",
+    "Sagittaire": "♐",
+    "Capricorne": "♑",
+    "Verseau": "♒",
+    "Poissons": "♓"
+}
+
+PLANET_SYMBOLS = {
+    "Soleil": "☉",
+    "Lune": "☽",
+    "Mercure": "☿",
+    "Vénus": "♀",
+    "Mars": "♂",
+    "Jupiter": "♃",
+    "Saturne": "♄",
+    "Uranus": "♅",
+    "Neptune": "♆",
+    "Pluton": "♇"
+}
+
+ASPECT_SYMBOLS = {
+    "Conjonction": "☌",
+    "Sextile": "⚹",
+    "Carré": "□",
+    "Trigone": "△",
+    "Opposition": "☍"
+}
 
 def astro_logik_presentation():
 
@@ -26,7 +84,6 @@ def astro_logik_presentation():
 
 def display_planet_positions(positions, start_time, start_time_utc):
     
-    print()
     print("⌚ Heure saisie :", start_time)
     print("🌐 Heure UTC :", start_time_utc)
     print()
@@ -37,7 +94,10 @@ def display_planet_positions(positions, start_time, start_time_utc):
         if planet_position is not None:
             zodiac_sign = get_zodiac_sign(planet_position)
             zodiac_sign_degree = get_zodiac_sign_degree(planet_position)
-            print(f"{planet_name:<10} : {zodiac_sign:<12} {zodiac_sign_degree:>6.2f}°") # :.2f arrondit à 2 décimales
+            zodiac_symbol = ZODIAC_SYMBOLS[zodiac_sign]
+            planet_symbol = PLANET_SYMBOLS[planet_name]
+            planet_color = PLANET_COLORS[planet_name]
+            print(f"{planet_color}{planet_symbol} {planet_name:<10}{RESET} {zodiac_sign:<12} {zodiac_symbol} {DIM}{zodiac_sign_degree:>6.2f}°{RESET}") # :.2f arrondit à 2 décimales
 
 
 def display_planetary_aspects(aspects):
@@ -54,8 +114,13 @@ def display_planetary_aspects(aspects):
         aspect = aspect_data["aspect"]
         distance = aspect_data["distance"]
         effective_orb = aspect_data["effective_orb"]
+        aspect_symbol = ASPECT_SYMBOLS[aspect]
 
-        print(f"{planet_1:<8} et {planet_2:<8} : {YELLOW}{aspect:<12}{RESET} ({distance:>6.2f}° | orbe : {effective_orb:.2f}°)")
+        aspect_color = ASPECT_COLORS[aspect]
+        planet_1_color = PLANET_COLORS[planet_1]
+        planet_2_color = PLANET_COLORS[planet_2]
+
+        print(f"{planet_1_color}{planet_1:<8}{RESET} . {planet_2_color}{planet_2:<8}{RESET} {aspect_color}{aspect_symbol} {aspect:<12}{RESET} {DIM}({distance:>6.2f}° | orbe : {effective_orb:.2f}°){RESET}")
 
 
 def display_available_cities(available_cities):
@@ -70,12 +135,27 @@ def display_double_calculation_message():
 
 
 def display_ascendant_and_descendant(ascendant, descendant):
+
     zodiac_sign_ascendant = get_zodiac_sign(ascendant)
     zodiac_sign_descendant = get_zodiac_sign(descendant)
     zodiac_sign_ascendant_degree = get_zodiac_sign_degree(ascendant)
     zodiac_sign_descendant_degree = get_zodiac_sign_degree(descendant)
+    zodiac_ascendant_symbol = ZODIAC_SYMBOLS[zodiac_sign_ascendant]
+    zodiac_descendant_symbol = ZODIAC_SYMBOLS[zodiac_sign_descendant]
+    
+    print(f"{YELLOW}Ascendant : {zodiac_sign_ascendant} {zodiac_ascendant_symbol}{RESET} {DIM}({ascendant:.2f}° | {zodiac_sign_ascendant_degree:.2f}°){RESET}")
+    print(f"Descendant : {zodiac_sign_descendant} {zodiac_descendant_symbol}{RESET} {DIM}({descendant:.2f}° | {zodiac_sign_descendant_degree:.2f}°){RESET}")
     print()
-    print(
-        f"{YELLOW}Ascendant : {zodiac_sign_ascendant} ({ascendant:.2f}° | {zodiac_sign_ascendant_degree:.2f}°){RESET} - "
-        f"Descendant : {zodiac_sign_descendant} ({descendant:.2f}° | {zodiac_sign_descendant_degree:.2f}°)"
-        )
+
+
+def display_sun_position(positions):
+
+    sun_position = positions["Soleil"]
+    
+    zodiac_solar_sign = get_zodiac_sign(sun_position)
+    zodiac_solar_sign_degree = get_zodiac_sign_degree(sun_position)
+    zodiac_solar_sign_symbol = ZODIAC_SYMBOLS[zodiac_solar_sign]
+
+    print()
+    print(f"{RED}Signe astrologique : {zodiac_solar_sign}{RESET} {zodiac_solar_sign_symbol} {DIM}({zodiac_solar_sign_degree:.2f}°){RESET}")
+    print()
