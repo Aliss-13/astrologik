@@ -36,7 +36,7 @@ L'objectif est de développer progressivement une application capable de calcule
 
 ## 📸 Aperçu du programme
 
-<img src="pictures/astroprov.png" alt="Capture d'écran d'ASTROLOGIK" width="950">
+<img src="pictures/astroprov.png" alt="Capture d'écran d'ASTROLOGIK" width="850">
 
 ## 🛠️ Technologies utilisées
 

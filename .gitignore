@@ -11,9 +11,11 @@ __pycache__/
 *.db
 
 # Espace de travail personnel
+personal_notes/
 *.code-workspace
 *.txt
 *.png
+*.bat
 !pictures/
 !pictures/*.png
 *.jpg

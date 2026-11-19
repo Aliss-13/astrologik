@@ -1,5 +1,6 @@
 from display import (astro_logik_presentation, display_planet_positions, display_planetary_aspects, display_available_cities, 
-                     display_double_calculation_message, display_ascendant_and_descendant, display_sun_position)
+                     display_double_calculation_message, display_ascendant_and_descendant, display_sun_position,
+                     display_medium_coeli_and_imum_coeli)
 
 from user_input import get_date_and_time, get_city_data, get_city_name, ask_ambiguous_time
 from dates_and_time import get_timezone, convert_to_utc, analyze_local_time
@@ -11,7 +12,7 @@ from astrology.aspects import get_planetary_aspects
 
 from astronomy.time_calculations import (get_julian_day, get_mean_obliquity, get_local_sidereal_time, 
                                          get_local_sidereal_angle_radians)
-from astronomy.coordinates import get_ascendant_and_descendant
+from astronomy.coordinates import get_ascendant_and_descendant, get_medium_coeli_and_imum_coeli
 
 from datetime import datetime
 
@@ -110,6 +111,12 @@ def main():
 
         # Affichage : ascendant et descendant
         display_ascendant_and_descendant(ascendant, descendant)
+
+        # Calcul : Milieu du Ciel, Fond du Ciel
+        medium_coeli, imum_coeli = get_medium_coeli_and_imum_coeli(local_sidereal_angle_radians, mean_obliquity)
+
+        # Affichage : Milieu du Ciel, Fond du Ciel
+        display_medium_coeli_and_imum_coeli(medium_coeli, imum_coeli)
 
         # Affichage : position des planètes
         display_planet_positions(positions, start_time, start_time_utc_item)

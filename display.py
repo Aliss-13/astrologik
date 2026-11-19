@@ -1,5 +1,9 @@
 from astrology.western import get_zodiac_sign, get_zodiac_sign_degree
 
+ARROW_RIGHT = "\U0001f816"  # Droite (🠖)
+ARROW_LEFT = "\U0001f814"   # Gauche (🠔)
+ARROW_UP = "\U0001f815"     # Haut (🠕)
+ARROW_DOWN = "\U0001f817"   # Bas (🠗)
 
 YELLOW = "\033[93m"
 CYAN = "\033[38;2;112;198;250m"
@@ -14,6 +18,7 @@ ORANGE = "\033[38;5;208m"
 RED = "\033[38;5;196m"
 MAGENTA = "\033[38;2;218;80;190m"
 LAVENDER = "\033[38;2;180;154;255m"
+SILVER = "\033[38;2;192;192;192m"
 RESET = "\033[0m"
 
 ASPECT_COLORS = {
@@ -143,8 +148,22 @@ def display_ascendant_and_descendant(ascendant, descendant):
     zodiac_ascendant_symbol = ZODIAC_SYMBOLS[zodiac_sign_ascendant]
     zodiac_descendant_symbol = ZODIAC_SYMBOLS[zodiac_sign_descendant]
     
-    print(f"{YELLOW}Ascendant : {zodiac_sign_ascendant} {zodiac_ascendant_symbol}{RESET} {DIM}({ascendant:.2f}° | {zodiac_sign_ascendant_degree:.2f}°){RESET}")
-    print(f"Descendant : {zodiac_sign_descendant} {zodiac_descendant_symbol}{RESET} {DIM}({descendant:.2f}° | {zodiac_sign_descendant_degree:.2f}°){RESET}")
+    print(f"{YELLOW}{ARROW_LEFT} Ascendant : {zodiac_sign_ascendant} {zodiac_ascendant_symbol}{RESET} {DIM}({ascendant:.2f}° | {zodiac_sign_ascendant_degree:.2f}°){RESET}")
+    print(f"{SILVER}{ARROW_RIGHT} Descendant : {zodiac_sign_descendant} {zodiac_descendant_symbol}{RESET} {DIM}({descendant:.2f}° | {zodiac_sign_descendant_degree:.2f}°){RESET}")
+    print()
+
+
+def display_medium_coeli_and_imum_coeli(medium_coeli, imum_coeli):
+
+    zodiac_sign_mc = get_zodiac_sign(medium_coeli)
+    zodiac_sign_ic = get_zodiac_sign(imum_coeli)
+    zodiac_sign_mc_degree = get_zodiac_sign_degree(medium_coeli)
+    zodiac_sign_ic_degree = get_zodiac_sign_degree(imum_coeli)
+    zodiac_mc_symbol = ZODIAC_SYMBOLS[zodiac_sign_mc]
+    zodiac_ic_symbol = ZODIAC_SYMBOLS[zodiac_sign_ic]
+    
+    print(f"{CYAN}{ARROW_UP} Milieu du Ciel : {zodiac_sign_mc} {zodiac_mc_symbol}{RESET} {DIM}({medium_coeli:.2f}° | {zodiac_sign_mc_degree:.2f}°){RESET}")
+    print(f"{SILVER}{ARROW_DOWN} Fond du Ciel : {zodiac_sign_ic} {zodiac_ic_symbol}{RESET} {DIM}({imum_coeli:.2f}° | {zodiac_sign_ic_degree:.2f}°){RESET}")
     print()
 
 
@@ -157,5 +176,5 @@ def display_sun_position(positions):
     zodiac_solar_sign_symbol = ZODIAC_SYMBOLS[zodiac_solar_sign]
 
     print()
-    print(f"{RED}Signe astrologique : {zodiac_solar_sign}{RESET} {zodiac_solar_sign_symbol} {DIM}({zodiac_solar_sign_degree:.2f}°){RESET}")
+    print(f"{RED}☀️ Signe astrologique : {zodiac_solar_sign}{RESET} {zodiac_solar_sign_symbol} {DIM}({zodiac_solar_sign_degree:.2f}°){RESET}")
     print()

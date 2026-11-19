@@ -20,3 +20,19 @@ def get_ascendant_and_descendant(local_sidereal_angle, latitude, mean_obliquity)
     descendant_ecliptic_longitude = (ascendant_ecliptic_longitude + 180) % 360
 
     return ascendant_ecliptic_longitude, descendant_ecliptic_longitude
+
+
+def get_medium_coeli_and_imum_coeli(local_sidereal_angle, mean_obliquity):
+
+    obliquity_rad = math.radians(mean_obliquity)
+
+    formula_ecliptic_longitude_medium_coeli = math.atan2(
+        math.sin(local_sidereal_angle)/math.cos(obliquity_rad), 
+        math.cos(local_sidereal_angle)
+        )
+    
+    medium_coeli = math.degrees(formula_ecliptic_longitude_medium_coeli) % 360
+
+    imum_coeli = (medium_coeli + 180) % 360
+
+    return medium_coeli, imum_coeli
