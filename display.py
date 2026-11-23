@@ -1,4 +1,4 @@
-from astrology.western import get_zodiac_sign, get_zodiac_sign_degree
+from astrology.zodiac import get_zodiac_sign, get_zodiac_sign_degree
 
 ARROW_RIGHT = "\U0001f816"  # Droite (🠖)
 ARROW_LEFT = "\U0001f814"   # Gauche (🠔)

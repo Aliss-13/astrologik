@@ -1,5 +1,5 @@
 import pytest
-from astrology.western import get_zodiac_sign
+from astrology.zodiac import get_zodiac_sign
 
 
 @pytest.mark.parametrize(
