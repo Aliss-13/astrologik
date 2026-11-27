@@ -1,14 +1,15 @@
 from display import (astro_logik_presentation, display_planet_positions, display_planetary_aspects, display_available_cities, 
                      display_double_calculation_message, display_ascendant_and_descendant, display_sun_position,
-                     display_medium_coeli_and_imum_coeli)
+                     display_medium_coeli_and_imum_coeli, display_house_in)
 
-from user_input import get_date_and_time, get_city_data, get_city_name, ask_ambiguous_time
+from user_input import get_date_and_time, get_city_data, get_city_name, ask_ambiguous_time, get_house_domification_system
 from dates_and_time import get_timezone, convert_to_utc, analyze_local_time
 
 from api.astronomy import get_all_planets_positions
 from api.geography import search_cities
 
 from astrology.aspects import get_planetary_aspects
+from astrology.houses import get_houses_longitudes, get_planet_position_in_house
 
 from astronomy.time_calculations import (get_julian_day, get_mean_obliquity, get_local_sidereal_time, 
                                          get_local_sidereal_angle_radians)
@@ -89,6 +90,8 @@ def main():
     print(f"Fuseau horaire : {timezone_name}")
     print(f"Heure locale : {start_time}")
 
+    # Choix du système de domification
+    domification_choice = get_house_domification_system()
 
     orb = 5
 
@@ -96,6 +99,7 @@ def main():
 
         # Récupération des données : position des planètes
         positions = get_all_planets_positions(start_time_utc_item)
+
 
         # Affichage : signe solaire
         display_sun_position(positions)
@@ -118,14 +122,26 @@ def main():
         # Affichage : Milieu du Ciel, Fond du Ciel
         display_medium_coeli_and_imum_coeli(medium_coeli, imum_coeli)
 
+        # Calcul : Maisons et positions des planètes dans les maisons
+        houses_longitudes = get_houses_longitudes(ascendant, imum_coeli, descendant, medium_coeli, domification_choice)
+                                                  
+        if houses_longitudes:
+            planets_in_houses = get_planet_position_in_house(houses_longitudes, positions)
+
+            # Affichage : position des planètes dans les maisons
+            for name, house_number in planets_in_houses.items():
+                display_house_in(name, house_number)
+
         # Affichage : position des planètes
         display_planet_positions(positions, start_time, start_time_utc_item)
 
         # Calcul des aspects pour chaque "positions"
         aspects = get_planetary_aspects(positions, orb)
-
+        
         # Affichage : aspects des planètes
         display_planetary_aspects(aspects)
+
+        
 
         
 

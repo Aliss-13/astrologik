@@ -61,3 +61,22 @@ def ask_ambiguous_time():
     
         if choice in ("1", "2", "3"):
             return choice
+
+
+def get_house_domification_system():
+
+    print()
+    print(f"{YELLOW}Choix du système de domification{RESET}")
+    print(f"{DIM}Vous pouvez prendre Placidus par défaut si vous ne savez pas.{RESET}")
+    
+    while True:
+        print("[1] Placidus 🛠️")
+        print("[2] Maisons égales") 
+        print("[3] Porphyre")
+        print("[4] Signes entiers 🛠️")
+    
+        choice = input("> ")
+        print()
+    
+        if choice in ("1", "2", "3", "4"):
+            return choice

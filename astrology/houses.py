@@ -30,3 +30,52 @@ def get_porphyre_houses(ascendant, ic, descendant, mc):
             houses_longitudes_porphyre.append(longitude)
 
     return houses_longitudes_porphyre
+
+
+
+def get_planet_position_in_house(houses, longitudes):
+
+    planets_in_houses = {}
+
+    for i in range (0, 12):
+        house_number = i + 1
+        end = houses[(i + 1) % 12]
+        start = houses[i]
+
+        for name, longitude in longitudes.items():
+
+            in_house = False
+
+            if start < end:
+                if start <= longitude < end:
+                    in_house = True
+
+            if start > end:
+                if start <= longitude < 360 or 0 <= longitude < end:
+                    in_house = True
+                    
+            if in_house:
+                planets_in_houses[name] = house_number
+
+    return planets_in_houses
+
+
+def get_houses_longitudes(ascendant, ic, descendant, mc, choice=None):
+
+    houses_longitudes = None
+
+    if choice == "1":
+        print("PLACIDUS : en construction")
+        
+    elif choice == "2":
+        houses_longitudes = get_equal_houses(ascendant)
+
+    elif choice == "3":
+        houses_longitudes = get_porphyre_houses(ascendant, ic, descendant, mc)
+
+    elif choice == "4":
+        print("SIGNES ENTIERS : en construction")
+
+    return houses_longitudes
+
+

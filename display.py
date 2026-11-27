@@ -139,6 +139,10 @@ def display_double_calculation_message():
     print()
 
 
+def display_house_in(name, house_number):
+    print (f"{name} en Maison {house_number}")
+
+
 def display_ascendant_and_descendant(ascendant, descendant):
 
     zodiac_sign_ascendant = get_zodiac_sign(ascendant)

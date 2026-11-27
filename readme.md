@@ -1,6 +1,10 @@
 # 🪐 ASTRO-LOGIK
 
-### Des calculs astronomiques irréprochables au service d'interprétations parfaitement invérifiables.
+
+<p align="center"><strong>Des calculs astronomiques irréprochables au service d'interprétations parfaitement invérifiables.</strong></p>
+<p align="center">
+  <img src="pictures/kermit astrology.jpg" width="350" alt="Illustration readme">
+</p>
 
 **ASTRO-LOGIK** est un projet Python de calcul astrologique utilisant de véritables données astronomiques fournies par la NASA.
 

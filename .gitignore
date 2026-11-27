@@ -16,6 +16,7 @@ personal_notes/
 *.txt
 *.png
 *.bat
+*.jpg
 !pictures/
 !pictures/*.png
-*.jpg
+!pictures/*.jpg
